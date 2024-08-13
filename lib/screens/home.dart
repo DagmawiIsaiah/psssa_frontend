@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
+import '../models/models.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
@@ -102,12 +103,22 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Record(),
+            const RecordHeader(),
             const SizedBox(height: 10),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.45,
               child: ListView.separated(
-                itemBuilder: (context, index) => const Record(),
+                itemBuilder: (context, index) => RecordView(
+                  record: Record(
+                    id: 0,
+                    regionId: 0,
+                    cityId: 0,
+                    categoryId: 0,
+                    statusId: 0,
+                    name: "Tesfa Wondu Unknown",
+                    pentionNumber: "PNAA10012454",
+                  ),
+                ),
                 itemCount: 15,
                 separatorBuilder: (BuildContext context, int index) {
                   return const SizedBox(
