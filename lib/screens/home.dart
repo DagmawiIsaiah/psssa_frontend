@@ -108,7 +108,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.45,
               child: ListView.separated(
-                itemBuilder: (context, index) => RecordView(
+                itemBuilder: (context, index) => const RecordView(
                   record: Record(
                     id: 0,
                     regionId: 0,

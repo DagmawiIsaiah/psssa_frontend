@@ -4,3 +4,4 @@ export 'city.dart';
 export 'record.dart';
 export 'region.dart';
 export 'status.dart';
+export 'user.dart';
