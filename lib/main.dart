@@ -16,7 +16,7 @@ class PSSSA extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'PSSSA',
       theme: AppTheme.lightTheme,
-      initialRoute: AdminHomeScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       routes: {
         LoginScreen.routeName: (context) => const LoginScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
