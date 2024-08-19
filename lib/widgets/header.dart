@@ -10,9 +10,12 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 150,
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width * 0.1,
         vertical: SpacingSize.s20,
       ),
       child: Row(
@@ -25,14 +28,29 @@ class Header extends StatelessWidget {
           const SizedBox(
             width: SpacingSize.s16,
           ),
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Public Servants' Social Security Association"),
-              Text("Ye mengest serategnoch maheberawi wastena astedader"),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Public Servants' Social Security Association",
+                  style: textTheme.titleLarge,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                ),
+                Text(
+                  "Ye mengest serategnoch maheberawi wastena astedader",
+                  style: textTheme.titleLarge,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
+          // const Spacer(),
           ElevatedButton.icon(
             onPressed: () {
               showDialog(

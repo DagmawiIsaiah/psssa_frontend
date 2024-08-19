@@ -20,6 +20,18 @@ class _RecordViewState extends State<RecordView> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    Widget recordColumn(String label) {
+      return Expanded(
+        child: Text(
+          label,
+          style: textTheme.bodyLarge,
+          softWrap: true,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -32,7 +44,6 @@ class _RecordViewState extends State<RecordView> {
           borderRadius: BorderRadius.circular(10),
           color: Colors.black12,
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 150),
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
           vertical: 10,
@@ -40,30 +51,17 @@ class _RecordViewState extends State<RecordView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              widget.record.name,
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              widget.record.pentionNumber,
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "record.categoryId",
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "record.regionId",
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "record.cityId",
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "record.statusId",
-              style: textTheme.bodyLarge,
-            ),
+            recordColumn(widget.record.name),
+            const SizedBox(width: 10),
+            recordColumn(widget.record.pentionNumber),
+            const SizedBox(width: 10),
+            recordColumn(widget.record.categoryId.toString()),
+            const SizedBox(width: 10),
+            recordColumn(widget.record.regionId.toString()),
+            const SizedBox(width: 10),
+            recordColumn(widget.record.cityId.toString()),
+            const SizedBox(width: 10),
+            recordColumn(widget.record.statusId.toString()),
           ],
         ),
       ),

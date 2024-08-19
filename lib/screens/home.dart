@@ -12,7 +12,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.textTheme;
+    final size = context.deviceSize;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -23,24 +24,26 @@ class HomeScreen extends StatelessWidget {
             const Divider(),
             const SizedBox(height: SpacingSize.s24),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 150,
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.1,
                 vertical: 24,
               ),
               child: Text(
-                "Filter and Search",
+                "Search",
                 style: textTheme.headlineLarge,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 150,
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.1,
               ),
               child: Row(
                 children: [
                   const SizedBox(
                     width: 300,
-                    child: CupertinoSearchTextField(),
+                    child: CupertinoSearchTextField(
+                      placeholder: "Enter Name or Pention Number",
+                    ),
                   ),
                   const SizedBox(
                     width: SpacingSize.s20,
@@ -52,15 +55,23 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
+            const SizedBox(height: SpacingSize.s20),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+              child: Text(
+                "Filter by",
+                style: textTheme.titleLarge,
+              ),
+            ),
+            Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 150,
+                horizontal: size.width * 0.1,
                 vertical: 24,
               ),
-              child: Row(
+              child: const Wrap(
+                spacing: SpacingSize.s16,
+                runSpacing: SpacingSize.s16,
                 children: [
-                  Text("Filter by"),
-                  SizedBox(width: SpacingSize.s16),
                   DropdownMenu(
                     label: Text("Category"),
                     dropdownMenuEntries: [
@@ -70,7 +81,6 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  SizedBox(width: SpacingSize.s16),
                   DropdownMenu(
                     label: Text("Region"),
                     dropdownMenuEntries: [
@@ -80,7 +90,6 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  SizedBox(width: SpacingSize.s16),
                   DropdownMenu(
                     label: Text("City"),
                     dropdownMenuEntries: [
@@ -90,7 +99,6 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  SizedBox(width: SpacingSize.s16),
                   DropdownMenu(
                     label: Text("Status"),
                     dropdownMenuEntries: [
@@ -103,10 +111,14 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const RecordHeader(),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.45,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+              child: const RecordHeader(),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
+              margin: const EdgeInsets.symmetric(vertical: SpacingSize.s20),
+              height: size.height * 0.45,
               child: ListView.separated(
                 itemBuilder: (context, index) => const RecordView(
                   record: Record(
