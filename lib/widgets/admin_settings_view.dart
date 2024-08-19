@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:psssa_frontend/utils/constants.dart';
+
+import '../utils/utils.dart';
 
 class AdminSettingsView extends StatelessWidget {
   const AdminSettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final textTheme = context.textTheme;
 
     return Expanded(
       flex: 5,

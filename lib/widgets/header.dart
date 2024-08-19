@@ -10,8 +10,8 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-    final textTheme = Theme.of(context).textTheme;
+    final size = context.deviceSize;
+    final textTheme = context.textTheme;
 
     return Container(
       padding: EdgeInsets.symmetric(

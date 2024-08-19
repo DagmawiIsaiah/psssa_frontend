@@ -50,8 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    Size size = MediaQuery.of(context).size;
+    final textTheme = context.textTheme;
+    Size size = context.deviceSize;
 
     return Scaffold(
       body: SingleChildScrollView(
