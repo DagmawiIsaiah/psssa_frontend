@@ -11,6 +11,7 @@ class AdminUesrsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final size = context.deviceSize;
 
     return Expanded(
       flex: 5,
@@ -18,45 +19,41 @@ class AdminUesrsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              // horizontal: 150,
-              vertical: 24,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: Text(
               "Filter and Search",
               style: textTheme.headlineLarge,
             ),
           ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 300,
+                child: CupertinoSearchTextField(),
+              ),
+              const SizedBox(
+                width: SpacingSize.s20,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text("Search"),
+              ),
+            ],
+          ),
+          const SizedBox(height: SpacingSize.s20),
+          Text(
+            "Filter By",
+            style: textTheme.titleLarge,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(
-                // horizontal: 150,
-                ),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 300,
-                  child: CupertinoSearchTextField(),
-                ),
-                const SizedBox(
-                  width: SpacingSize.s20,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Search"),
-                ),
-              ],
+              vertical: SpacingSize.s20,
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(
-              // horizontal: 150,
-              vertical: 24,
-            ),
-            child: Row(
+            child: Wrap(
+              spacing: SpacingSize.s16,
+              runSpacing: SpacingSize.s16,
               children: [
-                Text("Filter by"),
-                SizedBox(width: SpacingSize.s16),
-                DropdownMenu(
+                const DropdownMenu(
                   label: Text("Region"),
                   dropdownMenuEntries: [
                     DropdownMenuEntry(value: 0, label: "Civil"),
@@ -65,8 +62,7 @@ class AdminUesrsView extends StatelessWidget {
                     DropdownMenuEntry(value: 3, label: "Undertaking"),
                   ],
                 ),
-                SizedBox(width: SpacingSize.s16),
-                DropdownMenu(
+                const DropdownMenu(
                   label: Text("City"),
                   dropdownMenuEntries: [
                     DropdownMenuEntry(value: 0, label: "Civil"),
@@ -75,13 +71,20 @@ class AdminUesrsView extends StatelessWidget {
                     DropdownMenuEntry(value: 3, label: "Undertaking"),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text("Apply Filters"),
+                  ),
+                ),
               ],
             ),
           ),
           const UserHeader(),
           const SizedBox(height: 10),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.45,
+            height: size.height * 0.4,
             child: ListView.separated(
               itemBuilder: (context, index) => const UsersView(
                 user: User(
@@ -89,18 +92,17 @@ class AdminUesrsView extends StatelessWidget {
                   regionId: 0,
                   cityId: 0,
                   accountTypeId: 0,
-                  name: "Tesfa",
+                  name: "Tesfa Wondu Unknown",
                   password: "password",
                 ),
               ),
               itemCount: 15,
               separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  height: 5,
-                );
+                return const SizedBox(height: 5);
               },
             ),
           ),
+          const SizedBox(height: SpacingSize.s20),
         ],
       ),
     );

@@ -20,6 +20,18 @@ class _UsersViewState extends State<UsersView> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    Widget userColumn(String label) {
+      return Expanded(
+        child: Text(
+          label,
+          style: textTheme.bodyLarge,
+          softWrap: true,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -32,7 +44,6 @@ class _UsersViewState extends State<UsersView> {
           borderRadius: BorderRadius.circular(10),
           color: Colors.black12,
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 150),
         padding: const EdgeInsets.symmetric(
           horizontal: 30,
           vertical: 10,
@@ -40,18 +51,11 @@ class _UsersViewState extends State<UsersView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(
-              widget.user.name,
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "user.regionId",
-              style: textTheme.bodyLarge,
-            ),
-            Text(
-              "user.cityId",
-              style: textTheme.bodyLarge,
-            ),
+            userColumn(widget.user.name),
+            const SizedBox(width: 10),
+            userColumn(widget.user.regionId.toString()),
+            const SizedBox(width: 10),
+            userColumn(widget.user.cityId.toString()),
           ],
         ),
       ),
