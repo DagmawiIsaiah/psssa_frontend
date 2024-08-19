@@ -14,33 +14,39 @@ class AdminSettingsView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              // horizontal: 150,
-              vertical: 24,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: Text(
               "Update password",
               style: textTheme.headlineLarge,
             ),
           ),
-          const TextField(
-            decoration: InputDecoration(
-              label: Text("Old password"),
-              border: OutlineInputBorder(),
+          const SizedBox(
+            width: 300,
+            child: TextField(
+              decoration: InputDecoration(
+                label: Text("Old password"),
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
           const SizedBox(height: SpacingSize.s12),
-          const TextField(
-            decoration: InputDecoration(
-              label: Text("New password"),
-              border: OutlineInputBorder(),
+          const SizedBox(
+            width: 300,
+            child: TextField(
+              decoration: InputDecoration(
+                label: Text("New password"),
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
           const SizedBox(height: SpacingSize.s12),
-          const TextField(
-            decoration: InputDecoration(
-              label: Text("New password"),
-              border: OutlineInputBorder(),
+          const SizedBox(
+            width: 300,
+            child: TextField(
+              decoration: InputDecoration(
+                label: Text("New password"),
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
           Padding(
@@ -53,42 +59,43 @@ class AdminSettingsView extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              // horizontal: 150,
-              vertical: 24,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: Text(
-              "Update password",
+              "Download Project Files",
               style: textTheme.headlineLarge,
             ),
           ),
           Row(
             children: [
-              const Text("Figma design file"),
-              TextButton.icon(
-                onPressed: () {},
-                label: const Text("Download"),
-                icon: const Icon(Icons.download_rounded),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Figma design file"),
+                  SizedBox(height: 10),
+                  Text("FastAPI backend project file"),
+                  SizedBox(height: 10),
+                  Text("Flutter frontend project file"),
+                ],
               ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text("FastAPI backend project file"),
-              TextButton.icon(
-                onPressed: () {},
-                label: const Text("Download"),
-                icon: const Icon(Icons.download_rounded),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const Text("Flutter frontend project file"),
-              TextButton.icon(
-                onPressed: () {},
-                label: const Text("Download"),
-                icon: const Icon(Icons.download_rounded),
+              const SizedBox(width: 20),
+              Column(
+                children: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    label: const Text("Download"),
+                    icon: const Icon(Icons.download_rounded),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    label: const Text("Download"),
+                    icon: const Icon(Icons.download_rounded),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    label: const Text("Download"),
+                    icon: const Icon(Icons.download_rounded),
+                  ),
+                ],
               ),
             ],
           ),

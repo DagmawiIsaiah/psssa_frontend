@@ -68,11 +68,11 @@ class HomeScreen extends StatelessWidget {
                 horizontal: size.width * 0.1,
                 vertical: 24,
               ),
-              child: const Wrap(
+              child: Wrap(
                 spacing: SpacingSize.s16,
                 runSpacing: SpacingSize.s16,
                 children: [
-                  DropdownMenu(
+                  const DropdownMenu(
                     label: Text("Category"),
                     dropdownMenuEntries: [
                       DropdownMenuEntry(value: 0, label: "Civil"),
@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  DropdownMenu(
+                  const DropdownMenu(
                     label: Text("Region"),
                     dropdownMenuEntries: [
                       DropdownMenuEntry(value: 0, label: "Civil"),
@@ -90,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  DropdownMenu(
+                  const DropdownMenu(
                     label: Text("City"),
                     dropdownMenuEntries: [
                       DropdownMenuEntry(value: 0, label: "Civil"),
@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
-                  DropdownMenu(
+                  const DropdownMenu(
                     label: Text("Status"),
                     dropdownMenuEntries: [
                       DropdownMenuEntry(value: 0, label: "Civil"),
@@ -108,6 +108,13 @@ class HomeScreen extends StatelessWidget {
                       DropdownMenuEntry(value: 3, label: "Undertaking"),
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text("Apply Filters"),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -115,9 +122,9 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
               child: const RecordHeader(),
             ),
+            const SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-              margin: const EdgeInsets.symmetric(vertical: SpacingSize.s20),
               height: size.height * 0.45,
               child: ListView.separated(
                 itemBuilder: (context, index) => const RecordView(
@@ -139,6 +146,7 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(height: SpacingSize.s20),
           ],
         ),
       ),

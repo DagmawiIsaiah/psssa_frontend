@@ -6,5 +6,5 @@ export 'record_header.dart';
 export 'update_status_view.dart';
 export 'admin_records_view.dart';
 export 'admin_users_view.dart';
-export 'user.dart';
+export 'user_view.dart';
 export 'users_header.dart';

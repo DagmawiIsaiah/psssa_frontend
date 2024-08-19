@@ -48,11 +48,11 @@ class AdminRecordsView extends StatelessWidget {
             style: textTheme.titleLarge,
           ),
           const SizedBox(height: SpacingSize.s20),
-          const Wrap(
+          Wrap(
             runSpacing: SpacingSize.s16,
             spacing: SpacingSize.s16,
             children: [
-              DropdownMenu(
+              const DropdownMenu(
                 label: Text("Category"),
                 dropdownMenuEntries: [
                   DropdownMenuEntry(value: 0, label: "Civil"),
@@ -61,7 +61,7 @@ class AdminRecordsView extends StatelessWidget {
                   DropdownMenuEntry(value: 3, label: "Undertaking"),
                 ],
               ),
-              DropdownMenu(
+              const DropdownMenu(
                 label: Text("Region"),
                 dropdownMenuEntries: [
                   DropdownMenuEntry(value: 0, label: "Civil"),
@@ -70,7 +70,7 @@ class AdminRecordsView extends StatelessWidget {
                   DropdownMenuEntry(value: 3, label: "Undertaking"),
                 ],
               ),
-              DropdownMenu(
+              const DropdownMenu(
                 label: Text("City"),
                 dropdownMenuEntries: [
                   DropdownMenuEntry(value: 0, label: "Civil"),
@@ -79,7 +79,7 @@ class AdminRecordsView extends StatelessWidget {
                   DropdownMenuEntry(value: 3, label: "Undertaking"),
                 ],
               ),
-              DropdownMenu(
+              const DropdownMenu(
                 label: Text("Status"),
                 dropdownMenuEntries: [
                   DropdownMenuEntry(value: 0, label: "Civil"),
@@ -87,6 +87,13 @@ class AdminRecordsView extends StatelessWidget {
                   DropdownMenuEntry(value: 2, label: "Police"),
                   DropdownMenuEntry(value: 3, label: "Undertaking"),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text("Apply Filters"),
+                ),
               ),
             ],
           ),
