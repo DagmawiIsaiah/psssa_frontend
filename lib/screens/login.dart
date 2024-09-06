@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/screens.dart';
 import '../utils/utils.dart';
+import '../api/psssa_service.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -14,37 +18,56 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = "";
+  String _username = "";
   String _password = "";
   bool _showPassword = false;
 
-  String? validateEmail(String email) {
-    final emailRegex =
-        RegExp(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}");
-    if (email.isEmpty) {
-      return "Please enter your email.";
-    } else if (!emailRegex.hasMatch(email)) {
-      return "Please enter a valid email.";
+  String? validateEmail(String username) {
+    if (username.isEmpty) {
+      return "Please enter your user name";
     }
     return null;
   }
 
   String? validatePassword(String password) {
     if (password.isEmpty) {
-      return "Please enter your password.";
+      return "Please enter your password";
     } else if (password.length < 6) {
-      return "Password must be at least 6 characters.";
+      return "Password must be at least 6 characters";
     }
     return null;
   }
 
-  void _login() {
+  void _login() async {
     final formState = _formKey.currentState;
     if (formState!.validate()) {
       formState.save();
-
-      debugPrint("Email: $_email, Password: $_password");
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      await PsssaService().login(_username, _password).then((response) async {
+        if (response.statusCode == 200) {
+          final pref = await SharedPreferences.getInstance();
+          final Map<String, dynamic> user = jsonDecode(pref.getString("user")!);
+          if (user["account_type_id"] == 1) {
+            Navigator.of(context)
+                .pushReplacementNamed(AdminHomeScreen.routeName);
+          } else {
+            Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+          }
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Login Failed'),
+              content: const Text('Invalid username or password'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      });
     }
   }
 
@@ -83,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextFormField(
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'User ID',
                           labelStyle: textTheme.bodyLarge,
                           border: const OutlineInputBorder(),
                         ),
@@ -93,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ? validateEmail(value)
                               : validateEmail("");
                         },
-                        onSaved: (value) => _email = value!,
+                        onSaved: (value) => _username = value!,
                       ),
                       const SizedBox(height: SpacingSize.s12),
                       TextFormField(

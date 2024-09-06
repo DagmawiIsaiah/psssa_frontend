@@ -45,8 +45,11 @@ class UpdateStatusView extends StatelessWidget {
                       content: const Text("status update sucessful"),
                       actions: [
                         TextButton(
-                          onPressed: () {},
-                          child: const Text("hide"),
+                          onPressed: () {
+                            ScaffoldMessenger.of(context)
+                                .hideCurrentMaterialBanner();
+                          },
+                          child: const Text("Dismiss"),
                         ),
                       ],
                     ),

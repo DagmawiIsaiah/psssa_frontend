@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 import '../models/models.dart';
+import '../api/psssa_service.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/home';
@@ -63,60 +64,94 @@ class HomeScreen extends StatelessWidget {
                 style: textTheme.titleLarge,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.1,
-                vertical: 24,
-              ),
-              child: Wrap(
-                spacing: SpacingSize.s16,
-                runSpacing: SpacingSize.s16,
-                children: [
-                  const DropdownMenu(
-                    label: Text("Category"),
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: 0, label: "Civil"),
-                      DropdownMenuEntry(value: 1, label: "Military"),
-                      DropdownMenuEntry(value: 2, label: "Police"),
-                      DropdownMenuEntry(value: 3, label: "Undertaking"),
-                    ],
-                  ),
-                  const DropdownMenu(
-                    label: Text("Region"),
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: 0, label: "Civil"),
-                      DropdownMenuEntry(value: 1, label: "Military"),
-                      DropdownMenuEntry(value: 2, label: "Police"),
-                      DropdownMenuEntry(value: 3, label: "Undertaking"),
-                    ],
-                  ),
-                  const DropdownMenu(
-                    label: Text("City"),
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: 0, label: "Civil"),
-                      DropdownMenuEntry(value: 1, label: "Military"),
-                      DropdownMenuEntry(value: 2, label: "Police"),
-                      DropdownMenuEntry(value: 3, label: "Undertaking"),
-                    ],
-                  ),
-                  const DropdownMenu(
-                    label: Text("Status"),
-                    dropdownMenuEntries: [
-                      DropdownMenuEntry(value: 0, label: "Civil"),
-                      DropdownMenuEntry(value: 1, label: "Military"),
-                      DropdownMenuEntry(value: 2, label: "Police"),
-                      DropdownMenuEntry(value: 3, label: "Undertaking"),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text("Apply Filters"),
-                    ),
-                  ),
-                ],
-              ),
+            FutureBuilder(
+              future: PsssaService().getEssentials(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: textTheme.titleMedium,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    final essentials = snapshot.data as Map<String, dynamic>;
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.1,
+                        vertical: 24,
+                      ),
+                      child: Wrap(
+                        spacing: SpacingSize.s16,
+                        runSpacing: SpacingSize.s16,
+                        children: [
+                          DropdownMenu(
+                            label: const Text("Category"),
+                            dropdownMenuEntries: [
+                              ...List.generate(
+                                essentials['categories'].length,
+                                (int index) => DropdownMenuEntry(
+                                  value: essentials['categories'][index].id,
+                                  label: essentials['categories'][index].name,
+                                ),
+                              ),
+                            ],
+                          ),
+                          DropdownMenu(
+                            label: const Text("Region"),
+                            dropdownMenuEntries: [
+                              ...List.generate(
+                                essentials['regions'].length,
+                                (int index) => DropdownMenuEntry(
+                                  value: essentials['regions'][index].id,
+                                  label: essentials['regions'][index].name,
+                                ),
+                              ),
+                            ],
+                          ),
+                          DropdownMenu(
+                            label: const Text("City"),
+                            dropdownMenuEntries: [
+                              ...List.generate(
+                                essentials['cities'].length,
+                                (int index) => DropdownMenuEntry(
+                                  value: essentials['cities'][index].id,
+                                  label: essentials['cities'][index].name,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const DropdownMenu(
+                            label: Text("Status"),
+                            dropdownMenuEntries: [
+                              DropdownMenuEntry(value: 0, label: "Sent"),
+                              DropdownMenuEntry(value: 1, label: "Recived"),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: const Text("Apply Filters"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),

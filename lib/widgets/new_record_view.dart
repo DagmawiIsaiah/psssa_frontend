@@ -93,9 +93,10 @@ class _NewRecordViewState extends State<NewRecordView> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            setState(() {});
+                            ScaffoldMessenger.of(context)
+                                .hideCurrentMaterialBanner();
                           },
-                          child: const Text("hide"),
+                          child: const Text("Dismiss"),
                         ),
                       ],
                     ),

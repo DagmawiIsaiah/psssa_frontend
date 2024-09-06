@@ -12,10 +12,12 @@ class PSSSA extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.lightTheme;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PSSSA',
-      theme: AppTheme.lightTheme,
+      theme: theme,
       initialRoute: LoginScreen.routeName,
       routes: {
         LoginScreen.routeName: (context) => const LoginScreen(),

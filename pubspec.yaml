@@ -8,6 +8,7 @@ version: 1.0.0+1
 environment:
   sdk: ^3.5.0
   
+  
 dependencies:
   flutter:
     sdk: flutter
@@ -16,6 +17,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   provider: ^6.1.2
+  http: ^1.2.2
+  flutter_bloc: ^8.1.6
+  go_router: ^14.2.7
+  shared_preferences: ^2.3.2
 
 dev_dependencies:
   flutter_test:

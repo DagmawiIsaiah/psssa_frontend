@@ -82,9 +82,10 @@ class _PasswordChangeViewState extends State<PasswordChangeView> {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            setState(() {});
+                            ScaffoldMessenger.of(context)
+                                .hideCurrentMaterialBanner();
                           },
-                          child: const Text("hide"),
+                          child: const Text("dismiss"),
                         ),
                       ],
                     ),
