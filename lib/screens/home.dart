@@ -158,28 +158,54 @@ class HomeScreen extends StatelessWidget {
               child: const RecordHeader(),
             ),
             const SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: size.width * 0.1),
-              height: size.height * 0.45,
-              child: ListView.separated(
-                itemBuilder: (context, index) => const RecordView(
-                  record: Record(
-                    id: 0,
-                    regionId: 0,
-                    cityId: 0,
-                    categoryId: 0,
-                    statusId: 0,
-                    name: "Tesfa Wondu Unknown",
-                    pentionNumber: "PNAA10012454",
-                  ),
-                ),
-                itemCount: 15,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 5,
+            FutureBuilder(
+              future: PsssaService().getRecords(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                }
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: textTheme.titleMedium,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    final records = snapshot.data as Map<String, dynamic>;
+                    debugPrint(records.toString());
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.1),
+                      height: size.height * 0.45,
+                      child: ListView.separated(
+                        itemBuilder: (context, index) => const RecordView(
+                          record: Record(
+                            id: 0,
+                            regionId: 0,
+                            cityId: 0,
+                            categoryId: 0,
+                            statusId: 0,
+                            name: "Tesfa Wondu Unknown",
+                            pentionNumber: "PNAA10012454",
+                          ),
+                        ),
+                        itemCount: 5,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 5,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }
+                return Container();
+              },
             ),
             const SizedBox(height: SpacingSize.s20),
           ],

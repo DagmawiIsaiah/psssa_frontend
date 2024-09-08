@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 String devAPI = "http://127.0.0.1:8000";
-// String prodAPI = "http://127.0.0.1:8000";
+String prodAPI = "https://psssa-backend.onrender.com";
 
 Color primary = const Color.fromARGB(255, 0, 122, 255);
 Color background = const Color.fromARGB(255, 245, 245, 255);
