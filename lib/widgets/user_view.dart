@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../widgets/widgets.dart';
-import '../utils/utils.dart';
 
 class UsersView extends StatefulWidget {
   final User user;
@@ -19,7 +18,7 @@ class UsersView extends StatefulWidget {
 class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.textTheme;
+    final textTheme = Theme.of(context).textTheme;
 
     Widget userColumn(String label) {
       return Expanded(

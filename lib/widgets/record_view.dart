@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../widgets/widgets.dart';
-import '../utils/utils.dart';
 
 class RecordView extends StatefulWidget {
   final Record record;
@@ -19,7 +18,7 @@ class RecordView extends StatefulWidget {
 class _RecordViewState extends State<RecordView> {
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.textTheme;
+    final textTheme = Theme.of(context).textTheme;
 
     Widget recordColumn(String label) {
       return Expanded(

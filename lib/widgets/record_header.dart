@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../utils/utils.dart';
 
 class RecordHeader extends StatelessWidget {
   const RecordHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = context.textTheme;
+    final textTheme = Theme.of(context).textTheme;
 
     Widget headerItem(String label) {
       return Expanded(
