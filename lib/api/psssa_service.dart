@@ -8,9 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../utils/utils.dart';
+import '../providers/providers.dart';
 
 class PsssaService {
-  String productionAPI = prodAPI;
+  String productionAPI = devAPI;
 
   Future<Response> login(String username, String password) async {
     try {
@@ -41,6 +42,14 @@ class PsssaService {
         reasonPhrase: "Unauthorized",
       );
     }
+  }
+
+  Future<List<dynamic>> getCurrentUser() async {
+    final pref = await SharedPreferences.getInstance();
+    String token = pref.getString('token') ?? '';
+    String jsonString = pref.getString('user') ?? '';
+    Map<String, dynamic> userMap = jsonDecode(jsonString);
+    return [User.fromJson(userMap), token];
   }
 
   Future<Record?> createRecord(Record record) async {
@@ -82,50 +91,67 @@ class PsssaService {
     }
   }
 
-  Future<List<Record>> getRecords() async {
-    final url =
-        Uri.parse('$productionAPI/records'); // Adjust the endpoint as necessary
+  Future<List<Record>> fetchRecords({
+    int? categoryId,
+    int? regionId,
+    int? cityId,
+    int? statusId,
+    String? pentionNumber,
+  }) async {
+    // Base URL of your FastAPI backend
+    final String baseUrl = "$productionAPI/record";
 
-    try {
-      final pref = await SharedPreferences.getInstance();
-      final token = pref.getString("token");
-      
-      final response = await http.get(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization':
-              'Bearer $token', // Include Bearer token for authentication
-        },
-      );
+    // Construct query parameters
+    Map<String, String> queryParams = {};
+    if (categoryId != null) {
+      queryParams['category_id'] = categoryId.toString();
+    }
+    if (regionId != null) {
+      queryParams['region_id'] = regionId.toString();
+    }
+    if (cityId != null) {
+      queryParams['city_id'] = cityId.toString();
+    }
+    if (statusId != null) {
+      queryParams['status_id'] = statusId.toString();
+    }
+    if (pentionNumber != null) {
+      queryParams['pention_number'] = pentionNumber;
+    }
 
-      if (response.statusCode == 200) {
-        // Parse the response and return the list of records
-        List<dynamic> body = jsonDecode(response.body);
-        List<Record> records =
-            body.map((dynamic item) => Record.fromJson(item)).toList();
-        return records;
-      } else {
-        // Handle the error
-        debugPrint('Failed to load records: ${response.statusCode}');
-        return [];
-      }
-    } catch (e) {
-      debugPrint('Error occurred while fetching records: $e');
-      return [];
+    // Add query parameters to the URL
+    final Uri uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
+
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString("token");
+
+    final response = await http.get(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer $token', // Include Bearer token for authentication
+      },
+    );
+
+    // Check for success
+    if (response.statusCode == 200) {
+      // Parse the JSON response into a list of records
+      List<dynamic> data = json.decode(response.body);
+      return data.map((recordJson) => Record.fromJson(recordJson)).toList();
+    } else {
+      throw Exception("Failed to fetch records");
     }
   }
 
-  Future<Map<String, dynamic>> getEssentials() async {
+  void getEssentials() async {
     final categories = await getCategories();
     final cities = await getCities();
     final regions = await getRegions();
 
-    return {
-      "categories": categories,
-      "cities": cities,
-      "regions": regions,
-    };
+    EssentialProvider().addCategories(categories);
+    EssentialProvider().addCities(cities);
+    EssentialProvider().addRegions(regions);
   }
 
   Future<List<Category>> getCategories() async {
