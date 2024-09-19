@@ -159,7 +159,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             FutureBuilder(
-              future: PsssaService().getRecords(),
+              future: PsssaService().fetchRecords(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(

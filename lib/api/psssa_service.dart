@@ -144,14 +144,12 @@ class PsssaService {
     }
   }
 
-  void getEssentials() async {
+  Future<Map<String, dynamic>> getEssentials() async {
     final categories = await getCategories();
     final cities = await getCities();
     final regions = await getRegions();
 
-    EssentialProvider().addCategories(categories);
-    EssentialProvider().addCities(cities);
-    EssentialProvider().addRegions(regions);
+    return {"categories": categories, "cities": cities, "regions": regions};
   }
 
   Future<List<Category>> getCategories() async {
