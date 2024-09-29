@@ -176,25 +176,16 @@ class HomeScreen extends StatelessWidget {
                     );
                   }
                   if (snapshot.hasData) {
-                    final records = snapshot.data as Map<String, dynamic>;
-                    debugPrint(records.toString());
-                    Container(
+                    final records = snapshot.data as List<Record>;
+                    return Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: size.width * 0.1),
                       height: size.height * 0.45,
                       child: ListView.separated(
-                        itemBuilder: (context, index) => const RecordView(
-                          record: Record(
-                            id: 0,
-                            regionId: 0,
-                            cityId: 0,
-                            categoryId: 0,
-                            statusId: 0,
-                            name: "Tesfa Wondu Unknown",
-                            pentionNumber: "PNAA10012454",
-                          ),
+                        itemBuilder: (context, index) => RecordView(
+                          record: records[index],
                         ),
-                        itemCount: 5,
+                        itemCount: records.length,
                         separatorBuilder: (BuildContext context, int index) {
                           return const SizedBox(
                             height: 5,
@@ -204,7 +195,7 @@ class HomeScreen extends StatelessWidget {
                     );
                   }
                 }
-                return Container();
+                return const Center(child: Text("Unkown Error"));
               },
             ),
             const SizedBox(height: SpacingSize.s20),

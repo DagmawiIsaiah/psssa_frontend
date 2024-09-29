@@ -1,17 +1,19 @@
 class Record {
   final int id;
   final int regionId;
-  final int cityId;
   final int categoryId;
+  final int cityId;
+  final int createdCityID;
   final int statusId;
   final String name;
   final String pentionNumber;
 
-  const Record({
+  const Record( {
     required this.id,
     required this.regionId,
     required this.cityId,
     required this.categoryId,
+    required this.createdCityID,
     required this.statusId,
     required this.name,
     required this.pentionNumber,
@@ -23,9 +25,10 @@ class Record {
       regionId: json["region_id"],
       cityId: json["city_id"],
       categoryId: json["category_id"],
+      createdCityID: json["created_city_id"],
       statusId: json["status_id"],
       name: json["name"],
-      pentionNumber: json["pention_number"],
+      pentionNumber: json["pension_number"],
     );
   }
 }

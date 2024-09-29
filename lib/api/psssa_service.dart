@@ -8,7 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 import '../utils/utils.dart';
-import '../providers/providers.dart';
 
 class PsssaService {
   String productionAPI = devAPI;
@@ -138,7 +137,11 @@ class PsssaService {
     if (response.statusCode == 200) {
       // Parse the JSON response into a list of records
       List<dynamic> data = json.decode(response.body);
-      return data.map((recordJson) => Record.fromJson(recordJson)).toList();
+      try {
+        return data.map((recordJson) => Record.fromJson(recordJson)).toList();
+      } catch (e) {
+        throw Exception(e);
+      }
     } else {
       throw Exception("Failed to fetch records");
     }

@@ -134,6 +134,7 @@ class AdminRecordsView extends StatelessWidget {
                           regionId: 0,
                           cityId: 0,
                           categoryId: 0,
+                          createdCityID: 0,
                           statusId: 0,
                           name: "Tesfa Wondu Unknown",
                           pentionNumber: "PNAA10012454",
