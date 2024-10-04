@@ -55,9 +55,9 @@ class _UsersViewState extends State<UsersView> {
           children: [
             userColumn(widget.user.name),
             const SizedBox(width: 10),
-            userColumn(_regions[widget.user.regionId - 1]),
+            userColumn(regions[widget.user.regionId - 1]),
             const SizedBox(width: 10),
-            userColumn(_cities[widget.user.regionId - 1][widget.user.cityId - 1]),
+            userColumn(cities[widget.user.regionId - 1][widget.user.cityId - 1]),
           ],
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
-import '../widgets/widgets.dart';
 import '../utils/utils.dart';
+import '../widgets/widgets.dart';
 
 class RecordView extends StatefulWidget {
   final Record record;
