@@ -21,7 +21,7 @@ class AdminUesrsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
             child: Text(
-              "Filter and Search",
+              "Search",
               style: textTheme.headlineLarge,
             ),
           ),
@@ -34,53 +34,14 @@ class AdminUesrsView extends StatelessWidget {
               const SizedBox(
                 width: SpacingSize.s20,
               ),
-              ElevatedButton(
+              ElevatedButton.icon(
                 onPressed: () {},
-                child: const Text("Search"),
+                icon: const Icon(Icons.add),
+                label: const Text("Add New"),
               ),
             ],
           ),
           const SizedBox(height: SpacingSize.s20),
-          Text(
-            "Filter By",
-            style: textTheme.titleLarge,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: SpacingSize.s20,
-            ),
-            child: Wrap(
-              spacing: SpacingSize.s16,
-              runSpacing: SpacingSize.s16,
-              children: [
-                const DropdownMenu(
-                  label: Text("Region"),
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 0, label: "Civil"),
-                    DropdownMenuEntry(value: 1, label: "Military"),
-                    DropdownMenuEntry(value: 2, label: "Police"),
-                    DropdownMenuEntry(value: 3, label: "Undertaking"),
-                  ],
-                ),
-                const DropdownMenu(
-                  label: Text("City"),
-                  dropdownMenuEntries: [
-                    DropdownMenuEntry(value: 0, label: "Civil"),
-                    DropdownMenuEntry(value: 1, label: "Military"),
-                    DropdownMenuEntry(value: 2, label: "Police"),
-                    DropdownMenuEntry(value: 3, label: "Undertaking"),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text("Apply Filters"),
-                  ),
-                ),
-              ],
-            ),
-          ),
           const UserHeader(),
           const SizedBox(height: 10),
           SizedBox(

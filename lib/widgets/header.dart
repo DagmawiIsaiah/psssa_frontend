@@ -51,38 +51,14 @@ class Header extends StatelessWidget {
             ),
           ),
           // const Spacer(),
-          ElevatedButton.icon(
+          ElevatedButton(
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) => const NewRecordView(),
+                builder: (context) => const PasswordChangeView(),
               );
             },
-            icon: const Icon(Icons.add),
-            label: const Text("New Record"),
-          ),
-          const SizedBox(
-            width: SpacingSize.s16,
-          ),
-          IconButton(
-            onPressed: () {
-              showMenu(
-                context: context,
-                position: const RelativeRect.fromLTRB(200, 75, 150, 0),
-                items: [
-                  PopupMenuItem(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const PasswordChangeView(),
-                      );
-                    },
-                    child: const Text("Change Password"),
-                  ),
-                ],
-              );
-            },
-            icon: const Icon(Icons.settings),
+            child: const Text("Change Password"),
           ),
         ],
       ),

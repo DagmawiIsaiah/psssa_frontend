@@ -90,98 +90,62 @@ class PsssaService {
     }
   }
 
-  Future<List<Record>> fetchRecords({
-    int? categoryId,
-    int? regionId,
-    int? cityId,
-    int? statusId,
-    String? pentionNumber,
+  Future<Record> fetchRecord({
+    required String pentionNumber,
   }) async {
-    // Base URL of your FastAPI backend
-    final String baseUrl = "$productionAPI/record";
-
-    // Construct query parameters
-    Map<String, String> queryParams = {};
-    if (categoryId != null) {
-      queryParams['category_id'] = categoryId.toString();
-    }
-    if (regionId != null) {
-      queryParams['region_id'] = regionId.toString();
-    }
-    if (cityId != null) {
-      queryParams['city_id'] = cityId.toString();
-    }
-    if (statusId != null) {
-      queryParams['status_id'] = statusId.toString();
-    }
-    if (pentionNumber != null) {
-      queryParams['pention_number'] = pentionNumber;
-    }
+    
+    final String baseUrl = "$productionAPI/record/$pentionNumber";
 
     // Add query parameters to the URL
-    final Uri uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
+    final Uri uri = Uri.parse(baseUrl);
 
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString("token");
 
-    final response = await http.get(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer $token', // Include Bearer token for authentication
-      },
-    );
+    try {
+      final response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization':
+              'Bearer $token', // Include token if needed for authentication
+        },
+      );
 
-    // Check for success
-    if (response.statusCode == 200) {
-      // Parse the JSON response into a list of records
-      List<dynamic> data = json.decode(response.body);
-      try {
-        return data.map((recordJson) => Record.fromJson(recordJson)).toList();
-      } catch (e) {
-        throw Exception(e);
+      if (response.statusCode == 200) {
+        // Successfully fetched record
+        final data = jsonDecode(response.body);
+        return Record.fromJson(data);
+      } else if (response.statusCode == 404) {
+        throw ("No records found");
+      } else {
+        throw ('Error: ${response.statusCode}');
       }
-    } else {
-      throw Exception("Failed to fetch records");
+    } catch (e) {
+      throw ('Error: $e');
     }
-  }
 
-  Future<Map<String, dynamic>> getEssentials() async {
-    final categories = await getCategories();
-    final cities = await getCities();
-    final regions = await getRegions();
+    //   final response = await http.get(
+    //     uri,
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization':
+    //           'Bearer $token', // Include Bearer token for authentication
+    //     },
+    //   );
 
-    return {"categories": categories, "cities": cities, "regions": regions};
-  }
-
-  Future<List<Category>> getCategories() async {
-    final response = await http.get(Uri.parse("$productionAPI/category"));
-    final json = jsonDecode(response.body);
-    final List<Category> categories = [];
-    for (var item in json) {
-      categories.add(Category.fromJson(item));
-    }
-    return categories;
-  }
-
-  Future<List<City>> getCities() async {
-    final response = await http.get(Uri.parse("$productionAPI/city"));
-    final json = jsonDecode(response.body);
-    final List<City> cities = [];
-    for (var item in json) {
-      cities.add(City.fromJson(item));
-    }
-    return cities;
-  }
-
-  Future<List<Region>> getRegions() async {
-    final response = await http.get(Uri.parse("$productionAPI/region"));
-    final json = jsonDecode(response.body);
-    final List<Region> regions = [];
-    for (var item in json) {
-      regions.add(Region.fromJson(item));
-    }
-    return regions;
+    //   // Check for success
+    //   if (response.statusCode == 200) {
+    //     // Parse the JSON response into a list of records
+    //     final data = json.decode(response.body);
+    //     debugPrint(data);
+    //     try {
+    //       return Record.fromJson(data);
+    //     } catch (e) {
+    //       throw Exception(e);
+    //     }
+    //   } else {
+    //     throw Exception("Failed to fetch records");
+    //   }
   }
 }
