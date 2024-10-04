@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../widgets/widgets.dart';
+import '../utils/utils.dart';
 
 class RecordView extends StatefulWidget {
   final Record record;
@@ -19,6 +20,10 @@ class _RecordViewState extends State<RecordView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final _categories = categories;
+    final _regions = regions;
+    final _cities = cities;
+    final status = ["Sent", "Recived"];
 
     Widget recordColumn(String label) {
       return Expanded(
@@ -36,7 +41,7 @@ class _RecordViewState extends State<RecordView> {
       onTap: () {
         showDialog(
           context: context,
-          builder: (context) => const UpdateStatusView(),
+          builder: (context) => UpdateStatusView(id: widget.record.id,),
         );
       },
       child: Container(
@@ -55,13 +60,14 @@ class _RecordViewState extends State<RecordView> {
             const SizedBox(width: 10),
             recordColumn(widget.record.pentionNumber),
             const SizedBox(width: 10),
-            recordColumn(widget.record.categoryId.toString()),
+            recordColumn(_categories[widget.record.categoryId - 1]),
             const SizedBox(width: 10),
-            recordColumn(widget.record.regionId.toString()),
+            recordColumn(_regions[widget.record.regionId - 1]),
             const SizedBox(width: 10),
-            recordColumn(widget.record.cityId.toString()),
+            recordColumn(
+                _cities[widget.record.regionId - 1][widget.record.cityId - 1]),
             const SizedBox(width: 10),
-            recordColumn(widget.record.statusId.toString()),
+            recordColumn(status[widget.record.statusId - 1]),
           ],
         ),
       ),

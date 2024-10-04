@@ -31,7 +31,7 @@ class UserHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          headerItem("Full Name"),
+          headerItem("Code"),
           const SizedBox(width: 10),
           headerItem("Region"),
           const SizedBox(width: 10),

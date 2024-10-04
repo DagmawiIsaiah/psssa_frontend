@@ -31,4 +31,18 @@ class Record {
       pentionNumber: json["pension_number"],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "region_id": regionId,
+      "city_id": cityId,
+      "category_id": categoryId,
+      "created_city_id": createdCityID,
+      "status_id": statusId,
+      "name": name,
+      "pension_number": pentionNumber,
+    };
+  }
+
 }

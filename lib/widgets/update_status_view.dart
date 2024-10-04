@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../api/psssa_service.dart';
 import '../utils/utils.dart';
 
 class UpdateStatusView extends StatelessWidget {
-  const UpdateStatusView({super.key});
+  final int id;
+
+  const UpdateStatusView({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
+    int status = 1;
+
     return AlertDialog(
       insetPadding: const EdgeInsets.all(110),
       contentPadding: const EdgeInsets.symmetric(
@@ -25,12 +30,17 @@ class UpdateStatusView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: SpacingSize.s16),
-            const DropdownMenu(
+            DropdownMenu(
               width: 400,
-              label: Text("Select status"),
-              dropdownMenuEntries: [
-                DropdownMenuEntry(value: 0, label: "Sent"),
-                DropdownMenuEntry(value: 1, label: "Recived"),
+              label: const Text("Select status"),
+              onSelected: (value) {
+                if (value != null) {
+                  status = value;
+                }
+              },
+              dropdownMenuEntries: const [
+                DropdownMenuEntry(value: 1, label: "Sent"),
+                DropdownMenuEntry(value: 2, label: "Recived"),
               ],
             ),
             const SizedBox(height: SpacingSize.s40),
@@ -38,21 +48,24 @@ class UpdateStatusView extends StatelessWidget {
               width: 400,
               child: ElevatedButton(
                 onPressed: () {
-                  // send change password request
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showMaterialBanner(
-                    MaterialBanner(
-                      content: const Text("status update sucessful"),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context)
-                                .hideCurrentMaterialBanner();
-                          },
-                          child: const Text("Dismiss"),
+                  PsssaService().updateRecordStatus(id, status).then(
+                    (_) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showMaterialBanner(
+                        MaterialBanner(
+                          content: const Text("status update sucessful"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentMaterialBanner();
+                              },
+                              child: const Text("Dismiss"),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
                 child: const Text("Update Status"),

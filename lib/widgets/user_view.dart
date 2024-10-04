@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
-import '../widgets/widgets.dart';
+import '../utils/utils.dart';
 
 class UsersView extends StatefulWidget {
   final User user;
@@ -19,6 +19,8 @@ class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final _regions = regions;
+    final _cities = cities;
 
     Widget userColumn(String label) {
       return Expanded(
@@ -34,10 +36,10 @@ class _UsersViewState extends State<UsersView> {
 
     return GestureDetector(
       onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => const UpdateStatusView(),
-        );
+        // showDialog(
+        //   context: context,
+        //   builder: (context) => const UpdateStatusView(),
+        // );
       },
       child: Container(
         decoration: BoxDecoration(
@@ -53,9 +55,9 @@ class _UsersViewState extends State<UsersView> {
           children: [
             userColumn(widget.user.name),
             const SizedBox(width: 10),
-            userColumn(widget.user.regionId.toString()),
+            userColumn(_regions[widget.user.regionId - 1]),
             const SizedBox(width: 10),
-            userColumn(widget.user.cityId.toString()),
+            userColumn(_cities[widget.user.regionId - 1][widget.user.cityId - 1]),
           ],
         ),
       ),

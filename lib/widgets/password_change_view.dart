@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:psssa_frontend/api/psssa_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/utils.dart';
 
@@ -10,7 +14,26 @@ class PasswordChangeView extends StatefulWidget {
 }
 
 class _PasswordChangeViewState extends State<PasswordChangeView> {
+  late TextEditingController _oldPasswordController;
+  late TextEditingController _newPasswordController;
+  late TextEditingController _confirmNewPasswordController;
   bool _showPassword = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _oldPasswordController = TextEditingController();
+    _newPasswordController = TextEditingController();
+    _confirmNewPasswordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmNewPasswordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +57,7 @@ class _PasswordChangeViewState extends State<PasswordChangeView> {
             const SizedBox(height: SpacingSize.s16),
             TextField(
               obscureText: !_showPassword,
+              controller: _oldPasswordController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 label: Text("Old password"),
@@ -42,6 +66,7 @@ class _PasswordChangeViewState extends State<PasswordChangeView> {
             const SizedBox(height: SpacingSize.s12),
             TextField(
               obscureText: !_showPassword,
+              controller: _newPasswordController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 label: Text("New password"),
@@ -50,6 +75,7 @@ class _PasswordChangeViewState extends State<PasswordChangeView> {
             const SizedBox(height: SpacingSize.s12),
             TextField(
               obscureText: !_showPassword,
+              controller: _confirmNewPasswordController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 label: Text("Confirm new password"),
@@ -73,23 +99,29 @@ class _PasswordChangeViewState extends State<PasswordChangeView> {
             SizedBox(
               width: 400,
               child: ElevatedButton(
-                onPressed: () {
-                  // send change password request
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showMaterialBanner(
-                    MaterialBanner(
-                      content: const Text("Password update sucessful"),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            ScaffoldMessenger.of(context)
-                                .hideCurrentMaterialBanner();
-                          },
-                          child: const Text("dismiss"),
-                        ),
-                      ],
-                    ),
-                  );
+                onPressed: () async {
+                  final pref = await SharedPreferences.getInstance();
+                  final user = jsonDecode(pref.getString("user") ?? "");
+                  if (_newPasswordController.text ==
+                      _confirmNewPasswordController.text) {
+                    await PsssaService().updatePassword(
+                        user["id"], _confirmNewPasswordController.text);
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showMaterialBanner(
+                      MaterialBanner(
+                        content: const Text("Password update sucessful"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentMaterialBanner();
+                            },
+                            child: const Text("dismiss"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 },
                 child: const Text("Change Password"),
               ),

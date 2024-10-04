@@ -18,13 +18,46 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _searchController;
   List<Record> record = [];
+  bool _isLoading = false; // Loading state
 
   Future<void> searchRecord(String pensionNumber) async {
-    Record response =
-        await PsssaService().fetchRecord(pentionNumber: pensionNumber);
     setState(() {
-      record.add(response);
+      _isLoading = true; // Start loading
     });
+
+    try {
+      Record response =
+          await PsssaService().fetchRecord(pentionNumber: pensionNumber);
+      setState(() {
+        record.clear();
+        record.add(response);
+      });
+    } catch (e) {
+      // Handle error if needed
+      showErrorMessage(context, 'Error fetching record');
+    } finally {
+      setState(() {
+        _isLoading = false; // Stop loading
+      });
+    }
+  }
+
+  void showErrorMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Close',
+          textColor: Colors.white,
+          onPressed: () {
+            // Dismiss the current snack bar
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -35,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -71,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     width: 300,
                     child: CupertinoSearchTextField(
-                      placeholder: "Enter Name or Pention Number",
+                      placeholder: "Enter Name or Pension Number",
                       controller: _searchController,
                     ),
                   ),
@@ -88,7 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: SpacingSize.s20,
                   ),
                   ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const NewRecordView(),
+                      );
+                    },
                     icon: const Icon(Icons.add),
                     label: const Text("Add New"),
                   ),
@@ -101,11 +139,18 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const RecordHeader(),
             ),
             const SizedBox(height: 10),
-            (record.isNotEmpty)
-                ? RecordView(
-                    record: record[0],
-                  )
-                : Container(),
+            _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator()) // Show loading spinner
+                : (record.isNotEmpty)
+                    ? Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: size.width * 0.1),
+                        child: RecordView(
+                          record: record[0],
+                        ),
+                      )
+                    : Container(),
           ],
         ),
       ),

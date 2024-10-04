@@ -4,7 +4,6 @@ class User {
   final int cityId;
   final int accountTypeId;
   final String name;
-  final String password;
 
   const User({
     required this.id,
@@ -12,17 +11,15 @@ class User {
     required this.cityId,
     required this.accountTypeId,
     required this.name,
-    required this.password,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json["id"],
-      regionId: json["regionId"],
-      cityId: json["cityId"],
-      accountTypeId: json["accountTypeId"],
+      regionId: json["region_id"],
+      cityId: json["city_id"],
+      accountTypeId: json["account_type_id"],
       name: json["name"],
-      password: json["password"],
     );
   }
 }

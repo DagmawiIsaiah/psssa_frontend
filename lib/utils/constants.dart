@@ -11,105 +11,86 @@ List<String> categories = [
   "Undertaking",
 ];
 
-List<String> cities = [];
+List<List<String>> cities = [
+  [
+    "Addis Ketema",
+    "Akaki Kaliti",
+    "Bole",
+    "Gulele",
+    "Head Office",
+    "Kirkos",
+    "Kolfe",
+    "Ledeta",
+    "Nefas Selk Lafto",
+    "yeka",
+  ],
+  ["semera"],
+  [
+    "Bahir Dar",
+    "Debarq",
+    "Debre Berehan",
+    "Debre Markos",
+    "Debre Tabor",
+    "Dessie",
+    "Finote Selam",
+    "Gonder",
+    "Injibara",
+    "kemse",
+    "Woldia"
+  ],
+  ["Asosa", "Gilgel beles", "Kamashi"],
+  ["Deredewa"],
+  ["Chiro", "Harer"],
+  [
+    "Negele",
+    "Asela",
+    "Goba",
+    "Shasemene",
+    "Yabelo",
+    "Ginir",
+    "Bulehora",
+    "batu",
+    "Ambo",
+    "Bishoftu",
+    "Weliso",
+    "fiche",
+    "metu",
+    "Bedele",
+    "Gimbi",
+    "Nekemt",
+    "Dembi Dolo",
+    "shambu"
+  ],
+  ["Hawasa"],
+  [
+    "Arba Minch",
+    "Dila",
+    "Durame",
+    "Hosanna",
+    "Jinka",
+    "Sawla",
+    "Sodo",
+    "Welkite",
+    "Werabe"
+  ],
+  ["Jijiga", "Qebridahare"],
+  ["Mizan", "Gambela", "Dawro", "Bongad"],
+  ["Adigrat", "Mekele", "Aksum", "shire", "Maychew", "Humera", "Inda Slasse"],
+];
 
-List<Map<String, List<String>>> regions = [
-  {
-    "Addis Abeba": [
-      "Addis Ketema",
-      "Akaki Kaliti",
-      "Bole",
-      "Gulele",
-      "Head Office",
-      "Kirkos",
-      "Kolfe",
-      "Ledeta",
-      "Nefas Selk Lafto",
-      "yeka"
-    ]
-  },
-  {
-    "Afar": ["semera"]
-  },
-  {
-    "Amhara": [
-      "Bahir Dar",
-      "Debarq",
-      "Debre Berehan",
-      "Debre Markos",
-      "Debre Tabor",
-      "Dessie",
-      "Finote Selam",
-      "Gonder",
-      "Injibara",
-      "kemse",
-      "Woldia"
-    ]
-  },
-  {
-    "Benishangul Gumuz": ["Asosa", "Gilgel beles", "Kamashi"]
-  },
-  {
-    "Deredewa": ["Deredewa"]
-  },
-  {
-    "Harer": ["Chiro", "Harer"]
-  },
-  {
-    "Oromia": [
-      "Negele",
-      "Asela",
-      "Goba",
-      "Shasemene",
-      "Yabelo",
-      "Ginir",
-      "Bulehora",
-      "batu",
-      "Ambo",
-      "Bishoftu",
-      "Weliso",
-      "fiche",
-      "metu",
-      "Bedele",
-      "Gimbi",
-      "Nekemt",
-      "Dembi Dolo",
-      "shambu"
-    ]
-  },
-  {
-    "Sidama": ["Hawasa"]
-  },
-  {
-    "SNNPR": [
-      "Arba Minch",
-      "Dila",
-      "Durame",
-      "Hosanna",
-      "Jinka",
-      "Sawla",
-      "Sodo",
-      "Welkite",
-      "Werabe"
-    ]
-  },
-  {
-    "Somalia": ["Jijiga", "Qebridahare"]
-  },
-  {
-    "SWEP": ["Mizan", "Gambela", "Dawro", "Bongad"]
-  },
-  {
-    "Tigray": [
-      "Adigrat",
-      "Mekele",
-      "Aksum",
-      "shire",
-      "Maychew",
-      "Humera",
-      "Inda Slasse"
-    ]
-  }
+List<String> regions = [
+  "Addis Abeba",
+  "Afar",
+  "Amhara",
+  "Benishangul Gumuz",
+  "Deredewa",
+  "Harer",
+  "Oromia",
+  "Sidama",
+  "SNNPR",
+  "Somalia",
+  "SWEP",
+  "Tigray",
 ];
 
 Color primary = const Color.fromARGB(255, 0, 122, 255);
