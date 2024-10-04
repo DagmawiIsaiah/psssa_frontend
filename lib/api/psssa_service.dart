@@ -44,7 +44,7 @@ class PsssaService {
   }
 
   Future<void> createUser(Map<String, dynamic> userData) async {
-    final url = Uri.parse('$productionAPI/create');
+    final url = Uri.parse('$productionAPI/user/create');
 
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString("token");

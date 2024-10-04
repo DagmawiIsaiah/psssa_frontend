@@ -52,21 +52,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
                       style: textTheme.headlineLarge,
                     ),
                   ),
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 300,
-                        child: CupertinoSearchTextField(),
-                      ),
-                      const SizedBox(
-                        width: SpacingSize.s20,
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add),
-                        label: const Text("Add New"),
-                      ),
-                    ],
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const NewUserView(),
+                      );
+                    },
+                    icon: const Icon(Icons.add),
+                    label: const Text("Add New"),
                   ),
                   const SizedBox(height: SpacingSize.s20),
                   const UserHeader(),

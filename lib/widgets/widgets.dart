@@ -6,3 +6,4 @@ export 'record_header.dart';
 export 'update_status_view.dart';
 export 'user_view.dart';
 export 'users_header.dart';
+export 'new_user_view.dart';
