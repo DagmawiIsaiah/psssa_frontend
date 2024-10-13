@@ -19,8 +19,6 @@ class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final _regions = regions;
-    final _cities = cities;
 
     Widget userColumn(String label) {
       return Expanded(

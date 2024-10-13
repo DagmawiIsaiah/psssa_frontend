@@ -1,8 +1,7 @@
-import 'dart:convert';
+// ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:psssa_frontend/api/psssa_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/utils.dart';
 
@@ -36,7 +35,6 @@ class _NewUserViewState extends State<NewUserView> {
 
   @override
   Widget build(BuildContext context) {
-    final _categories = categories;
     final _regions = regions;
     final _cities = cities;
 
