@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _username = "";
   String _password = "";
   bool _showPassword = false;
+  bool _isLoading = false;  // Loading state
 
   String? validateEmail(String username) {
     if (username.isEmpty) {
@@ -43,6 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() async {
     final formState = _formKey.currentState;
     if (formState!.validate()) {
+      setState(() {
+        _isLoading = true;  // Show spinner
+      });
+
       formState.save();
       await PsssaService().login(_username, _password).then((response) async {
         if (response.statusCode == 200) {
@@ -69,6 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         }
+
+        setState(() {
+          _isLoading = false;  // Hide spinner
+        });
       });
     }
   }
@@ -88,84 +97,108 @@ class _LoginScreenState extends State<LoginScreen> {
               horizontal: 16,
               vertical: 32,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Spacer(),
-                Text(
-                  "Log In",
-                  style: textTheme.headlineLarge,
-                ),
-                Text(
-                  "Enter your credential to continue",
-                  style: textTheme.bodyLarge,
-                ),
-                const SizedBox(height: SpacingSize.s40),
-                Form(
-                  key: _formKey,
-                  child: Column(
+            child: _isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),  // Show spinner
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'User ID',
-                          labelStyle: textTheme.bodyLarge,
-                          border: const OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          return (value != null)
-                              ? validateEmail(value)
-                              : validateEmail("");
-                        },
-                        onSaved: (value) => _username = value!,
-                      ),
-                      const SizedBox(height: SpacingSize.s12),
-                      TextFormField(
-                        obscureText: !_showPassword,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: textTheme.bodyLarge,
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
-                            icon: (!_showPassword)
-                                ? const Icon(
-                                    Icons.visibility_outlined,
-                                  )
-                                : const Icon(
-                                    Icons.visibility_off_outlined,
-                                  ),
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/psssa_logo.png",
+                            width: 150,
                           ),
-                        ),
-                        validator: (value) {
-                          return (value != null)
-                              ? validatePassword(value)
-                              : validatePassword("");
-                        },
-                        onSaved: (value) => _password = value!,
-                        onFieldSubmitted: (_) => _login(),
+                        ],
                       ),
+                      const SizedBox(height: SpacingSize.s20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "PSSSA Postal Services",
+                            style: textTheme.headlineLarge,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: SpacingSize.s40),
+                      Text(
+                        "Log In",
+                        style: textTheme.headlineLarge,
+                      ),
+                      Text(
+                        "Enter your credential to continue",
+                        style: textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: SpacingSize.s40),
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'User ID',
+                                labelStyle: textTheme.bodyLarge,
+                                border: const OutlineInputBorder(),
+                              ),
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                return (value != null)
+                                    ? validateEmail(value)
+                                    : validateEmail("");
+                              },
+                              onSaved: (value) => _username = value!,
+                            ),
+                            const SizedBox(height: SpacingSize.s12),
+                            TextFormField(
+                              obscureText: !_showPassword,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                labelStyle: textTheme.bodyLarge,
+                                border: const OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _showPassword = !_showPassword;
+                                    });
+                                  },
+                                  icon: (!_showPassword)
+                                      ? const Icon(
+                                          Icons.visibility_outlined,
+                                        )
+                                      : const Icon(
+                                          Icons.visibility_off_outlined,
+                                        ),
+                                ),
+                              ),
+                              validator: (value) {
+                                return (value != null)
+                                    ? validatePassword(value)
+                                    : validatePassword("");
+                              },
+                              onSaved: (value) => _password = value!,
+                              onFieldSubmitted: (_) => _login(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: SpacingSize.s20),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _login();
+                          },
+                          child: const Text("Login"),
+                        ),
+                      ),
+                      const Spacer(),
                     ],
                   ),
-                ),
-                const SizedBox(height: SpacingSize.s20),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _login();
-                    },
-                    child: const Text("Login"),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ),
           ),
         ),
       ),
