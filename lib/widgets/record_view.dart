@@ -25,7 +25,7 @@ class _RecordViewState extends State<RecordView> {
     final _categories = categories;
     final _regions = regions;
     final _cities = cities;
-    final status = ["Sent", "Recived"];
+    final status = ["Pending", "Recived"];
 
     Widget recordColumn(String label) {
       return Expanded(
