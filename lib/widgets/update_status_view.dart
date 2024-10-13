@@ -41,7 +41,7 @@ class UpdateStatusView extends StatelessWidget {
                 }
               },
               dropdownMenuEntries: const [
-                DropdownMenuEntry(value: 1, label: "Sent"),
+                DropdownMenuEntry(value: 1, label: "Pending"),
                 DropdownMenuEntry(value: 2, label: "Recived"),
               ],
             ),

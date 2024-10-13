@@ -22,6 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Record> record = [];
   bool _isLoading = false; // Loading state
 
+  void addRecord(Record newRecord) {
+    setState(() {
+      record.clear();
+      record.add(newRecord);
+    });
+  }
+
   Future<void> searchRecord(String pensionNumber) async {
     setState(() {
       _isLoading = true; // Start loading
@@ -126,7 +133,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       showDialog(
                         context: context,
-                        builder: (context) => const NewRecordView(),
+                        builder: (context) => NewRecordView(
+                          onRecordAdded: addRecord,
+                        ),
                       );
                     },
                     icon: const Icon(Icons.add),

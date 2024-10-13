@@ -88,7 +88,7 @@ class PsssaService {
     return [User.fromJson(userMap), token];
   }
 
-  Future<void> createRecord(Map<String, dynamic> record) async {
+  Future<String> createRecord(Map<String, dynamic> record) async {
     final url = Uri.parse('$productionAPI/record/create');
 
     final pref = await SharedPreferences.getInstance();
@@ -110,13 +110,10 @@ class PsssaService {
       );
 
       if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body);
-        debugPrint('Record created: $jsonResponse');
+        return response.body;
       } else if (response.statusCode == 400) {
-        debugPrint('Bad request: ${response.body}');
         throw Exception('Bad request: ${response.body}');
       } else {
-        debugPrint('Error: ${response.statusCode}');
         throw Exception('Error: ${response.statusCode}');
       }
     } catch (e) {

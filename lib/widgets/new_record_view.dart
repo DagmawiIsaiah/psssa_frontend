@@ -3,13 +3,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:psssa_frontend/api/psssa_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/utils.dart';
+import '../api/psssa_service.dart';
+import '../models/models.dart';
 
 class NewRecordView extends StatefulWidget {
-  const NewRecordView({super.key});
+  final Function onRecordAdded;
+  const NewRecordView({super.key, required this.onRecordAdded});
 
   @override
   State<NewRecordView> createState() => _NewRecordViewState();
@@ -160,10 +162,11 @@ class _NewRecordViewState extends State<NewRecordView> {
                     "pension_number": pensionNumberController.text,
                   };
 
-                  debugPrint(record.toString());
-
-                  await PsssaService().createRecord(record);
-
+                  final response = await PsssaService().createRecord(record);
+                  
+                  Record newRecord = Record.fromJson(jsonDecode(response));
+                  widget.onRecordAdded(newRecord);
+                  
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showMaterialBanner(
                     MaterialBanner(
